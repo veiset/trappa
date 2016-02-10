@@ -11,4 +11,4 @@ npm run sensor
 
 *Diagram*
 
-![diagram](sensor_diagram.png)
+![diagram](sensor_diagram.jpg)
