@@ -1,0 +1,18 @@
+{
+  "name": "trappa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "sensor": "babel-node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "2.3.1",
+    "johnny-five": "0.9.19"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "6.5.0"
+  }
+}
