@@ -13,7 +13,6 @@ npm run sensor
 
 ![diagram](sensor_diagram.jpg)
 
-
 ## trappa-dashboard
 
 ```
