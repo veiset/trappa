@@ -1,0 +1,39 @@
+{
+  "name": "trappa-dashboard",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dashboard": "gulp && gulp browser-sync"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/larseliassen/trappa-dashboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/larseliassen/trappa-dashboard/issues"
+  },
+  "homepage": "https://github.com/larseliassen/trappa-dashboard",
+  "dependencies": {
+    "browser-sync": "^2.6.4",
+    "browserify": "^9.0.8",
+    "d3": "^3.5.5",
+    "firebase": "^2.4.1",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-jshint": "^1.10.0",
+    "gulp-less": "^3.0.2",
+    "gulp-sourcemaps": "^1.5.1",
+    "https": "^1.0.0",
+    "jshint-stylish": "^1.0.1",
+    "svgify": "0.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "ws": "^0.7.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "lodash": "^3.6.0"
+  }
+}

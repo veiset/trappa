@@ -4,8 +4,8 @@ import Firebase from 'firebase';
 const firebase = new Firebase("https://bekk-trappa.firebaseio.com/");
 const board = new five.Board();
 
-const SAMPLE_SIZE = 40;
-const SAMPLE_FREQ = 2;
+const SAMPLE_SIZE = 10;
+const SAMPLE_FREQ = 4;
 const SAMPLE_TIMES = 2;
 
 board.on("ready", function() {

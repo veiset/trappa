@@ -13,7 +13,7 @@
     "johnny-five": "0.9.19"
   },
   "devDependencies": {
-    "babel": "6.5.1",
+    "babel-core": "6.5.1",
     "babel-preset-es2015": "6.5.0"
   }
 }
