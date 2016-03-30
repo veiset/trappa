@@ -14,7 +14,7 @@ function ruterData() {
                 return p;
             })
             .filter(p => p.departure > now);
-        
+
         console.log(departures[0].departure);
         firebase.child('buss').set(Math.round((departures[0].departure - now)/1000/60));
     });

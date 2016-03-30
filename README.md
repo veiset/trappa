@@ -20,3 +20,11 @@ cd dashboard
 npm install
 npm run dashboard
 ```
+
+## trappa-external-data
+
+```
+cd external-data
+npm install
+npm run ext
+```

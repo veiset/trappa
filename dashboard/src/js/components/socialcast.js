@@ -9,7 +9,7 @@ module.exports = (function() {
 	return Simple.View.extend({
 		initialize: function(options) {
 			this.ws = options.ws;
-			fb.child('socialcast').on('value', this.onMessage.bind(this));
+			fb.child('twitter').on('value', this.onMessage.bind(this));
 			this.maxValue = 30;
 			this.render(0);
 
