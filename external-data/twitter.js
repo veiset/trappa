@@ -11,8 +11,6 @@ var firebase = new Firebase("https://bekk-trappa.firebaseio.com/");
 
 var stream = twitter.stream('statuses/filter', { track: 'fuck'});
 
-console.log('HeiHei');
-
 stream.on('tweet', function(tweet) {
     console.log(tweet);
     firebase.child('twitter').once('value', function(snapshot) {

@@ -1,7 +1,7 @@
 var http = require('https');
 var Firebase = require('firebase');
 var firebase = new Firebase("https://bekk-trappa.firebaseio.com/");
-
+var twitter = require('./twitter');
 
 function ruterData() {
     console.log('Fetching data... ');
