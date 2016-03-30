@@ -26,12 +26,12 @@ module.exports = (function() {
 		update: function(length) {
 			var value = this.calculateNumber(length);
 
-			this.$('.keyfigure-value').innerHTML = Math.round(length) + ' #bekkfagdag';
+			this.$('.keyfigure-value').innerHTML = Math.round(length) + ' tweets';
 			this.dial.update(value);
 		},
 		render: function(length) {
 			var value = this.calculateNumber(length);
-			this.$('.keyfigure-value').innerHTML = Math.round(value) + ' #bekkfagdag';
+			this.$('.keyfigure-value').innerHTML = Math.round(value) + ' tweets';
 		}
 		
 		
