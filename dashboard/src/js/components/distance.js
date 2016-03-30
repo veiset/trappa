@@ -10,23 +10,20 @@ module.exports = (function() {
 			fb.child('distance').on('value', this.onMessage.bind(this));
 		},
 		onMessage: function(data) {
-			this.render(data.val()*2);
+			this.render(data.val()*1.6);
 		},
 		normaliseNumber: function(value) {
 			return value / 100;
 		},
 		getLineVal: function(value) {
 			var max = 2.8;
-			return Math.min(100, value / max * 100);
+			return Math.min(100, value * 100);
 		},
 		render: function(value) {
 			var line = this.$('.keyfigure-bar--line');
 			var p = this.normaliseNumber(value);
 			line.style.left = this.getLineVal(p) + "%";
-			if (p > 2.8) {
-				p = "∞";
-			}
-			this.$('.keyfigure-value').innerHTML = p + ' m';
+			this.$('.keyfigure-value').innerHTML = Math.round(p*100)/100 + ' m';
 		}
 	});
 })();

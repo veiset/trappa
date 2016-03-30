@@ -29,7 +29,7 @@ module.exports = (function() {
 			var val = this.normaliseValue(value);
 			var dialvalue = this.getDialVaue(val);
 			this.dial.update(dialvalue);
-			this.$('.keyfigure-value').innerHTML = val + ' VOLUM';
+			this.$('.keyfigure-value').innerHTML = val*2 + ' VOLUM';
 		}
 	});
 })();
