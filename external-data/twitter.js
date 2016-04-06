@@ -9,7 +9,7 @@ var twitter = new Twitter({
 var Firebase = require('firebase');
 var firebase = new Firebase("https://bekk-trappa.firebaseio.com/");
 
-var stream = twitter.stream('statuses/filter', { track: 'fuck'});
+var stream = twitter.stream('statuses/filter', { track: 'hashtag'});
 
 stream.on('tweet', function(tweet) {
     console.log(tweet);
