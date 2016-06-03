@@ -127,7 +127,7 @@
 				firebase = new Firebase('https://bekk-trappa.firebaseio.com/');
 
 				firebase.on('value', function(data) {
-					distance.future = (data.val().sensors.distance)/(220-0);
+					distance.future = (data.val().sensors.distance)/(480-0);
 					flashvalues.future = (data.val().sensors.microphone)/(1000-0);
 					temperatures.future = (data.val().sensors.light)/(890-0);
 				});
