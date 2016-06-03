@@ -8,7 +8,7 @@ function ruterData() {
     fetchRuterData(data => {
         const now = new Date();
         const departures = data
-            .filter(p => p.MonitoredVehicleJourney.DirectionName === '2')
+            .filter(p => p.MonitoredVehicleJourney.DirectionName === '1')
             .map(p => {
                 p.departure = new Date(p.MonitoredVehicleJourney.MonitoredCall.AimedDepartureTime);
                 return p;
@@ -22,7 +22,7 @@ function ruterData() {
 
 function fetchRuterData(callback) {
     var url = 'reisapi.ruter.no';
-    var path = '/stopvisit/getdepartures/3010057?json=true';
+    var path = '/stopvisit/getdepartures/3010071?json=true';
     http.get({host: url, path: path}, function(response) {
         var body = '';
         response.on('data', function(d) {
