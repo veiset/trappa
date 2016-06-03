@@ -1,223 +1,221 @@
-
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Shaderbonanza by Lars</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body {
-				color: #ffffff;
-				font-family:Monospace;
-				font-size:13px;
-				text-align:center;
-				font-weight: bold;
+<head>
+    <title>Shaderbonanza by Lars</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            color: #ffffff;
+            font-family:Monospace;
+            font-size:13px;
+            text-align:center;
+            font-weight: bold;
 
-				background-color: #000000;
-				margin: 0px;
-				overflow: hidden;
-			}
+            background-color: #000000;
+            margin: 0px;
+            overflow: hidden;
+        }
 
-			#info {
-				position: absolute;
-				top: 0px; width: 100%;
-				padding: 5px;
-			}
+        #info {
+            position: absolute;
+            top: 0px; width: 100%;
+            padding: 5px;
+        }
 
-			a {
-				color: #ffffff;
-			}
+        a {
+            color: #ffffff;
+        }
 
-			#oldie a { color:#da0 }
-		</style>
-	</head>
-	<body>
+        #oldie a { color:#da0 }
+    </style>
+</head>
 
-		<div id="container"></div>
-		<div id="info"><a href="http://threejs.org" target="_blank"></a></div>
+<body>
+    <div id="container"></div>
+    <div id="info"><a href="http://threejs.org" target="_blank"></a></div>
 
-		<script src="./three.min.js"></script>
-		<script src="./firebase.js"></script>
+    <script src="./three.min.js"></script>
+    <script src="./firebase.js"></script>
 
-		<script id="fragmentShader" type="x-shader/x-fragment">
-			float BOLGEHOYDE = 0.5;
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        float BOLGEHOYDE = 0.5;
 
-			uniform vec2 resolution;
-			uniform float time;
-			uniform float speed;
-			uniform vec3 rgb;
-			uniform float height;
-			uniform float flash;
-			uniform float trackx;
-			uniform float temp;
-			uniform float dist;
+        uniform vec2 resolution;
+        uniform float time;
+        uniform float speed;
+        uniform vec3 rgb;
+        uniform float height;
+        uniform float flash;
+        uniform float trackx;
+        uniform float temp;
+        uniform float dist;
 
-			void main( void ) {
-				vec2 uv = gl_FragCoord.xy / resolution.xy;
+        void main( void ) {
+            vec2 uv = gl_FragCoord.xy / resolution.xy;
 
-				float x_dist = abs(dist-uv.x);
+            float x_dist = abs(dist-uv.x);
 
-				float y_mod = exp(-pow(x_dist,2.5)/1e-3) * BOLGEHOYDE;
+            float y_mod = exp(-pow(x_dist,2.5)/1e-3) * BOLGEHOYDE;
 
-			  float gauss1 = sin(uv.x*sin(time)*height+time)/40.+0.3 + (flash*y_mod) * 0.2;
-			  float gauss2 = sin(uv.x*sin(time)*height+time)/30.+0.3 + (flash*y_mod) * 0.4;
-			  float gauss3 = sin(uv.x*sin(time)*height+time)/20.+0.3 + (flash*y_mod) * 0.8;
-			  float gauss4 = sin(uv.x*sin(time)*height+time)/15.+0.3 + (flash*y_mod) * 1.5;
-			  float gauss5 = sin(uv.x*sin(time)*height+time)/10.+0.3 + (flash*y_mod) * 2.0;
+            float gauss1 = sin(uv.x*sin(time)*height+time)/40.+0.3 + (flash*y_mod) * 0.2;
+            float gauss2 = sin(uv.x*sin(time)*height+time)/30.+0.3 + (flash*y_mod) * 0.4;
+            float gauss3 = sin(uv.x*sin(time)*height+time)/20.+0.3 + (flash*y_mod) * 0.8;
+            float gauss4 = sin(uv.x*sin(time)*height+time)/15.+0.3 + (flash*y_mod) * 1.5;
+            float gauss5 = sin(uv.x*sin(time)*height+time)/10.+0.3 + (flash*y_mod) * 2.0;
 
-				vec4 col = vec4(vec3(0.0, 0.0, 0.0), 1.0);
-				float dist  = 1.4 * distance(vec2(uv.x, gauss1), uv);
-				float dist2 = 1.2 * distance(vec2(uv.x, gauss2), uv);
-				float dist3 = 1.0 * distance(vec2(uv.x, gauss3), uv);
-				float dist4 = 0.8 * distance(vec2(uv.x, gauss4), uv);
-				float dist5 = 0.6 * distance(vec2(uv.x, gauss5), uv);
+            vec4 col = vec4(vec3(0.0, 0.0, 0.0), 1.0);
+            float dist  = 1.4 * distance(vec2(uv.x, gauss1), uv);
+            float dist2 = 1.2 * distance(vec2(uv.x, gauss2), uv);
+            float dist3 = 1.0 * distance(vec2(uv.x, gauss3), uv);
+            float dist4 = 0.8 * distance(vec2(uv.x, gauss4), uv);
+            float dist5 = 0.6 * distance(vec2(uv.x, gauss5), uv);
 
-			  //rød
-			  col[0] += temp * rgb[0] * (1.-dist) * 8./12.;
+            //rød
+            col[0] += temp * rgb[0] * (1.-dist) * 8./12.;
 
-			  //grønn
-			  //col[1] += temp * rgb[1] * (1.-dist) *8./12.;
+            //grønn
+            //col[1] += temp * rgb[1] * (1.-dist) *8./12.;
 
-			  //blå
-			  col[2] += rgb[2] * (1.-dist) *2./8.;
+            //blå
+            col[2] += rgb[2] * (1.-dist) *2./8.;
 
-			  //hvit
-				col += vec4(vec3(exp(-pow(dist,2.)/1e-5)), 0.5);
-				col += vec4(vec3(exp(-pow(dist2,2.)/1e-5)), 0.5);
-				col += vec4(vec3(exp(-pow(dist3,2.)/1e-5)), 0.5);
-				col += vec4(vec3(exp(-pow(dist4,2.)/1e-5)), 0.5);
-				col += vec4(vec3(exp(-pow(dist5,2.)/1e-5)), 0.5);
+            //hvit
+            col += vec4(vec3(exp(-pow(dist,2.)/1e-5)), 0.5);
+            col += vec4(vec3(exp(-pow(dist2,2.)/1e-5)), 0.5);
+            col += vec4(vec3(exp(-pow(dist3,2.)/1e-5)), 0.5);
+            col += vec4(vec3(exp(-pow(dist4,2.)/1e-5)), 0.5);
+            col += vec4(vec3(exp(-pow(dist5,2.)/1e-5)), 0.5);
 
-				gl_FragColor = col;
-			}
+            gl_FragColor = col;
+        }
+    </script>
 
-		</script>
+    <script>
+        //if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-		<script>
+        var container, stats;
 
-			//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+        var camera, scene, renderer;
 
-			var container, stats;
+        var uniforms;
 
-			var camera, scene, renderer;
+        var flashvalues;
+        var temperatures;
 
-			var uniforms;
+        var firebase;
 
-			var flashvalues;
-			var temperatures;
+        init();
+        animate();
 
-			var firebase;
+        function init() {
 
-			init();
-			animate();
-
-			function init() {
-
-				//Dette er peaken, la den stå på 1, 1, 1 om den ikke skal brukes
-				flashvalues = {def: 0.0, now: 0.0, future: 0.0};
-				//Her kan bakgrunnsfargen settes, høyere temp = mere rød!
-				//Sett både now og future
-				temperatures = {def: 0.0, now: 2.0, future: 2.0};
-				//Dette er avstand
-				distance = {def: 0.0, now: 0.0, future: 0.0};
+            //Dette er peaken, la den stå på 1, 1, 1 om den ikke skal brukes
+            flashvalues = {def: 0.0, now: 0.0, future: 0.0};
+            //Her kan bakgrunnsfargen settes, høyere temp = mere rød!
+            //Sett både now og future
+            temperatures = {def: 0.0, now: 2.0, future: 2.0};
+            //Dette er avstand
+            distance = {def: 0.0, now: 0.0, future: 0.0};
 
 
 
 
-				firebase = new Firebase('https://bekk-trappa.firebaseio.com/');
+            firebase = new Firebase('https://bekk-trappa.firebaseio.com/');
 
-				firebase.on('value', function(data) {
-					distance.future = (data.val().sensors.distance)/(480-0);
-					flashvalues.future = (data.val().sensors.microphone)/(1000-0);
-					temperatures.future = (data.val().sensors.light)/(890-0);
-				});
+            firebase.on('value', function(data) {
+                distance.future = (data.val().sensors.distance)/(480-0);
+                flashvalues.future = (data.val().sensors.microphone)/(1000-0);
+                temperatures.future = (data.val().sensors.light)/(890-0);
+            });
 
-				container = document.getElementById( 'container' );
+            container = document.getElementById( 'container' );
 
-				camera = new THREE.Camera();
-				camera.position.z = 1;
+            camera = new THREE.Camera();
+            camera.position.z = 1;
 
-				scene = new THREE.Scene();
+            scene = new THREE.Scene();
 
-				var geometry = new THREE.PlaneGeometry( 2, 2 );
+            var geometry = new THREE.PlaneGeometry( 2, 2 );
 
-				uniforms = {
-					time: { type: "f", value: 1.0 },
-					resolution: { type: "v2", value: new THREE.Vector2() },
-					speed: { type: "f", value: 0.01 },
-					height: { type: "f", value: 5.0},
-					rgb: { type: "v3", value: new THREE.Vector3(1, 0, 1) },
-					flash: { type: "f", value: 0.0 },
-					trackx: { type: "f", value:0.0},
-					temp: {type:"f", value:1.0},
-					dist: {type:"f", value:0.0}
-				};
+            uniforms = {
+                time: { type: "f", value: 1.0 },
+                resolution: { type: "v2", value: new THREE.Vector2() },
+                speed: { type: "f", value: 0.01 },
+                height: { type: "f", value: 5.0},
+                rgb: { type: "v3", value: new THREE.Vector3(1, 0, 1) },
+                flash: { type: "f", value: 0.0 },
+                trackx: { type: "f", value:0.0},
+                temp: {type:"f", value:1.0},
+                dist: {type:"f", value:0.0}
+            };
 
-				var material = new THREE.ShaderMaterial( {
+            var material = new THREE.ShaderMaterial( {
 
-					uniforms: uniforms,
-					fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+                uniforms: uniforms,
+                fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 
-				} );
+            } );
 
-				var mesh = new THREE.Mesh( geometry, material );
-				scene.add( mesh );
+            var mesh = new THREE.Mesh( geometry, material );
+            scene.add( mesh );
 
-				renderer = new THREE.WebGLRenderer();
-				container.appendChild( renderer.domElement );
+            renderer = new THREE.WebGLRenderer();
+            container.appendChild( renderer.domElement );
 
-				onWindowResize();
+            onWindowResize();
 
-				window.addEventListener( 'resize', onWindowResize, false );
-				};
+            window.addEventListener( 'resize', onWindowResize, false );
+        };
 
-			function onWindowResize( event ) {
-				uniforms.resolution.value.x = window.innerWidth;
-				uniforms.resolution.value.y = window.innerHeight;
-				renderer.setSize( window.innerWidth, window.innerHeight );
-			}
+        function onWindowResize( event ) {
+            uniforms.resolution.value.x = window.innerWidth;
+            uniforms.resolution.value.y = window.innerHeight;
+            renderer.setSize( window.innerWidth, window.innerHeight );
+        }
 
-			function animate() {
-				requestAnimationFrame( animate );
-				render();
-			}
+        function animate() {
+            requestAnimationFrame( animate );
+            render();
+        }
 
 
-			function calculateFlashvalues() {
-				console.log(flashvalues.future, flashvalues.now);
-				if(flashvalues.now < 0.00001 && flashvalues.now > flashvalues.future) {
-					flashvalues.now = 0.0;
-					return;
-				}
+        function calculateFlashvalues() {
 
-					mod = 50. ;
-					if(flashvalues.future < flashvalues.now) {
-						mod = 100. ;
-					}
-					flashvalues.now = uniforms.flash.value + (flashvalues.future - flashvalues.now)/mod;
-					if((flashvalues.now / flashvalues.future) > 0.9) flashvalues.future = flashvalues.def;
-					uniforms.flash.value = flashvalues.now;
-			}
+            if (flashvalues.now < 0.00001 && flashvalues.now > flashvalues.future) {
+                flashvalues.now = 0.0;
+                return;
+            }
 
-			function calculateColorTemp() {
-				temperatures.now = uniforms.temp.value + (temperatures.future - temperatures.now);
-				uniforms.temp.value = temperatures.now;
-			}
+            mod = 50. ;
+            if (flashvalues.future < flashvalues.now) {
+                mod = 100. ;
+            }
+            flashvalues.now = uniforms.flash.value + (flashvalues.future - flashvalues.now)/mod;
+            
+            if((flashvalues.now / flashvalues.future) > 0.9) flashvalues.future = flashvalues.def;
+            uniforms.flash.value = flashvalues.now;
+        }
 
-			function calculateDist() {
-				distance.now = uniforms.dist.value + (distance.future - distance.now) * 0.01;
-				uniforms.dist.value = distance.now;
-			}
+        function calculateColorTemp() {
+            temperatures.now = uniforms.temp.value + (temperatures.future - temperatures.now);
+            uniforms.temp.value = temperatures.now;
+        }
 
-			function render() {
-				uniforms.time.value += uniforms.speed.value;
-				calculateFlashvalues();
-				calculateColorTemp();
-				calculateDist();
-				renderer.render( scene, camera );
-			}
+        function calculateDist() {
+            distance.now = uniforms.dist.value + (distance.future - distance.now) * 0.01;
+            uniforms.dist.value = distance.now;
+        }
 
-		</script>
+        function render() {
+            uniforms.time.value += uniforms.speed.value;
+            calculateFlashvalues();
+            calculateColorTemp();
+            calculateDist();
+            renderer.render( scene, camera );
+        }
 
-	</body>
+    </script>
+
+</body>
 </html>
